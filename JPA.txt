@@ -1,0 +1,14 @@
+@Entity
+@Table(name= ?)
+Class
+--> Tạo 1 entity lk đến bảng table
+
+@Id: định nghĩa khóa chính
+@GeneratedValue(strategy = GenarationType.?)
+Thuộc tính
+
+@Column(name = ?)  --> Định nghĩa column trong table
+Tên các thuộc tính : xxxxAaaaa --> sinh ra trong csdl xxxx_aaaa
+
+@MappedSuperClass // thêm vào lớp cha --> để tạo table lớp con tự động add thêm các trường của lớp cha
+

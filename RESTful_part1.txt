@@ -1,0 +1,10 @@
+Tìm hiểu @Controller, @RequestBody, @ResponseBody, @RequestMapping , HTTP Method
+
+@Controller // thêm vào trước tên lớp --> định nghĩa 1 controller
+@RequestMapping(value = ? , method = RequestMethod.?) // Nhận request từ client /value
+@RequestBody // Match vs class vd: @RequestBody <class> <var> --> convert dữ liệu kiểu <class> json
+
+--> sử dụng @RestController thay cho @Controller thì không cần định nghĩa @Responsebody
+@RequestMapping --> @<Method>Mapping(value = ?)
+
+

@@ -1,2 +1,4 @@
 com/hust/api/Application.class
+com/hust/api/NewAPI.class
 com/hust/api/HomeAPI.class
+com/hust/post/NewPost.class
