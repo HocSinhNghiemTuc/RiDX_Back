@@ -12,3 +12,48 @@ Tên các thuộc tính : xxxxAaaaa --> sinh ra trong csdl xxxx_aaaa
 
 @MappedSuperClass // thêm vào lớp cha --> để tạo table lớp con tự động add thêm các trường của lớp cha
 
+@EnableConfigurationProperties
+@EntityScan(basePackages = {?}) // Thêm 2 dòng này vào Application để có JPA có thể tự động tạo table theo các class trong basepackage
+
+
+Relationship Table
+@ManyToMany
+@JoinTable(name = ? ,
+           joinColumns = @JoinColumn(name = ? ),
+           inverseJoinColumns = @JoinColumn(name = ? ))
+
+--> Bảng còn lại
+    @ManyToMany(mappedBy = ? ) // mappedBy là tên List<> được định nghĩa ở bảng kia đã định nghĩ @JoinTable
+----------
+@OneToMany(mappedBy = ? )
+
+@ManyToOne()
+@JoinColumn(name = ? ) //
+
+
+---------------------
+Insert data
+@CrossOrigin
+
+api
+service //
+repository // thao tác với CSDL
+
+Mô hình 3 layer
+Các Repository extends từ JpaRepository<<Tên class entity tương ứng với repository>, <Kiểu dữ liệu PK>>
+
+Service gọi Repository
+Trong service
+@Autowired
+private <Repo> new  // Depend inject
+Trogn repo --> khai báo @Repository ( nếu không extends JpaRepo  nếu extends thì k cần)
+
+API call service
+Trong api
+@Autowired
+Trong service --> khai báo @Service
+
+Viết 1 Convert từ Entity sang <Class>
+thêm @Component vào trước class + @Autowired thuốc tính đó
+
+

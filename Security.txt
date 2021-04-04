@@ -1,0 +1,12 @@
+UserDetails và UserDetailsService
+Trong đoạn code trên, chúng ta có được một principal từ đối tượng Authentication. Principal đơn giản chỉ là một đối tượng và sẽ được ép kiểu sang UserDetails.
+
+UserDetails là một interface cốt lõi của Spring Security. Nó đại diện cho một principal nhưng theo một cách mở rộng và cụ thể hơn. Vậy UserDetails cung cấp cho ta những thông tin gì? UserDetails bao gồm các method sau:
+
+getAuthorities(): trả về danh sách các quyền của người dùng
+getPassword(): trả về password đã dùng trong qúa trình xác thực
+getUsername(): trả về username đã dùng trong qúa trình xác thực
+isAccountNonExpired(): trả về true nếu tài khoản của người dùng chưa hết hạn
+isAccountNonLocked(): trả về true nếu người dùng chưa bị khóa
+isCredentialsNonExpired(): trả về true nếu chứng thực (mật khẩu) của người dùng chưa hết hạn
+isEnabled(): trả về true nếu người dùng đã được kích hoạt
