@@ -1,7 +1,7 @@
 package com.hust.service.v1.user;
 
-import com.hust.entity.v1.user.User;
+import com.hust.entity.v1.user.UserEntity;
 
 public interface IUser {
-    public User save(User user);
+    public UserEntity save(UserEntity user);
 }

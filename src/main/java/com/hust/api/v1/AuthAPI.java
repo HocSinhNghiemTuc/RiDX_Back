@@ -1,15 +1,15 @@
 package com.hust.api.v1;
 
 import com.hust.entity.v1.user.ERole;
-import com.hust.entity.v1.user.Role;
-import com.hust.entity.v1.user.User;
+import com.hust.entity.v1.user.RoleEntity;
+import com.hust.entity.v1.user.UserEntity;
 import com.hust.payload.request.LoginRequest;
 import com.hust.payload.request.SignupRequest;
 import com.hust.payload.responce.JwtResponse;
 import com.hust.payload.responce.MessageResponse;
 import com.hust.repository.v1.user.RoleRepository;
 import com.hust.repository.v1.user.UserRepository;
-import com.hust.security.filter.JwtUtils;
+import com.hust.filter.JwtUtils;
 import com.hust.service.v1.user.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -68,7 +68,6 @@ public class AuthAPI {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        System.out.println(signUpRequest.getUsername());
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
@@ -82,35 +81,35 @@ public class AuthAPI {
         }
 
         // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
+        UserEntity user = new UserEntity(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
         List<String> strRoles = signUpRequest.getRole();
-        List<Role> roles = new ArrayList<>();
+        List<RoleEntity> roles = new ArrayList<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            RoleEntity userRole = roleRepository.findByName(ERole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: RoleEntity is not found."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        RoleEntity adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: RoleEntity is not found."));
                         roles.add(adminRole);
 
                         break;
                     case "mod":
-                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        RoleEntity modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                                .orElseThrow(() -> new RuntimeException("Error: RoleEntity is not found."));
                         roles.add(modRole);
 
                         break;
                     default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        RoleEntity userRole = roleRepository.findByName(ERole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: RoleEntity is not found."));
                         roles.add(userRole);
                 }
             });
@@ -119,7 +118,7 @@ public class AuthAPI {
         user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("UserEntity registered successfully!"));
     }
 
 }

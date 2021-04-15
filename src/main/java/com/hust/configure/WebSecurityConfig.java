@@ -1,7 +1,7 @@
 package com.hust.configure;
 
-import com.hust.security.filter.AuthEntryPointJwt;
-import com.hust.security.filter.AuthTokenFilter;
+import com.hust.filter.AuthEntryPointJwt;
+import com.hust.filter.AuthTokenFilter;
 import com.hust.service.v1.user.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

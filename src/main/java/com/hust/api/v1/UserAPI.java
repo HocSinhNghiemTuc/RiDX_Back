@@ -1,6 +1,6 @@
 package com.hust.api.v1;
 
-import com.hust.entity.v1.user.User;
+import com.hust.entity.v1.user.UserEntity;
 import com.hust.service.v1.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,8 +16,8 @@ public class UserAPI {
     private UserService userService;
 
     @PostMapping("/user")
-    public User createUser(@RequestBody User user){
-        User model = userService.save(user);
+    public UserEntity createUser(@RequestBody UserEntity user){
+        UserEntity model = userService.save(user);
         return model;
     }
 }

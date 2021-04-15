@@ -1,7 +1,7 @@
 package com.hust.service.v1.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hust.entity.v1.user.User;
+import com.hust.entity.v1.user.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,7 +34,7 @@ public class UserDetailsImpl implements UserDetails {
         this.password = password;
         this.authorities = authorities;
     }
-    public static UserDetailsImpl build(User user) {
+    public static UserDetailsImpl build(UserEntity user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
