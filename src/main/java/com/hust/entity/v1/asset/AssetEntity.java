@@ -1,5 +1,6 @@
 package com.hust.entity.v1.asset;
 
+import com.hust.entity.v1.BaseEntity;
 import com.hust.entity.v1.user.UserEntity;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -16,17 +17,14 @@ import java.util.Date;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "asset")
-public class AssetEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class AssetEntity extends BaseEntity {
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private AssetCategoryEntity assetCategory;
+    private AssetCategoryEntity category;
 
     @Column(updatable = false)
     @CreatedDate
@@ -56,6 +54,18 @@ public class AssetEntity {
     @Column
     private float availability;
 
+
+    public AssetEntity(String name,float confidentiality, float integrity, float availability){
+        this.name = name;
+        this.confidentiality = confidentiality;
+        this.integrity = integrity;
+        this.availability = availability;
+    }
+
+    public AssetEntity() {
+
+    }
+
     public String getName() {
         return name;
     }
@@ -65,11 +75,11 @@ public class AssetEntity {
     }
 
     public AssetCategoryEntity getAssetCategory() {
-        return assetCategory;
+        return category;
     }
 
-    public void setAssetCategory(AssetCategoryEntity assetCategory) {
-        this.assetCategory = assetCategory;
+    public void setAssetCategory(AssetCategoryEntity category) {
+        this.category = category;
     }
 
     public Timestamp getCreatedAt() {

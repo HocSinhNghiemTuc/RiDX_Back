@@ -1,17 +1,18 @@
-package com.hust.api.v1;
+package com.hust.api.v1.auth;
 
 import com.hust.entity.v1.user.ERole;
 import com.hust.entity.v1.user.RoleEntity;
 import com.hust.entity.v1.user.UserEntity;
+import com.hust.filter.JwtUtils;
 import com.hust.payload.request.LoginRequest;
 import com.hust.payload.request.SignupRequest;
 import com.hust.payload.responce.JwtResponse;
 import com.hust.payload.responce.MessageResponse;
 import com.hust.repository.v1.user.RoleRepository;
 import com.hust.repository.v1.user.UserRepository;
-import com.hust.filter.JwtUtils;
 import com.hust.service.v1.user.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +21,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +48,11 @@ public class AuthAPI {
     @Autowired
     private JwtUtils jwtUtils;
 
+    @ExceptionHandler(RuntimeException.class)
+    void handleIllegalStateException(IllegalStateException e, HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.BAD_REQUEST.value(),e.getMessage());
+    }
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -61,7 +69,6 @@ public class AuthAPI {
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
-                userDetails.getUsername(),
                 userDetails.getEmail(),
                 roles));
     }
@@ -117,7 +124,6 @@ public class AuthAPI {
 
         user.setRoles(roles);
         userRepository.save(user);
-
         return ResponseEntity.ok(new MessageResponse("UserEntity registered successfully!"));
     }
 

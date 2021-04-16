@@ -1,8 +1,12 @@
 package com.hust.entity.v1.user;
 
+import com.hust.entity.v1.BaseEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Base64;
 import java.util.List;
 
 @Entity
@@ -10,22 +14,14 @@ import java.util.List;
                 @UniqueConstraint(columnNames = "username"),
                 @UniqueConstraint(columnNames = "email")
         })
-public class UserEntity {
-    @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column
-    @NotBlank
+public class UserEntity extends BaseEntity {
+    @Column(nullable = false)
     private String username;
 
-    @Column
-    @NotBlank
-    @Email
+    @Column(nullable = false)
     private String email;
 
-    @Column
-    @NotBlank
+    @Column(nullable = false)
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -34,13 +30,13 @@ public class UserEntity {
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<RoleEntity> roles;
 
-    public UserEntity(){
-
-    }
-    public UserEntity(@NotBlank String username, @NotBlank @Email String email, @NotBlank String password) {
+    public UserEntity(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public UserEntity() {
     }
 
     public List<RoleEntity> getRoles() {
@@ -49,10 +45,6 @@ public class UserEntity {
 
     public void setRoles(List<RoleEntity> roles) {
         this.roles = roles;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getUsername() {

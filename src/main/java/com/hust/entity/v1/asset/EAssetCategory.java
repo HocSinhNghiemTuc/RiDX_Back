@@ -4,5 +4,5 @@ public enum EAssetCategory {
     SERVER,
     APPLICATION,
     DATA,
-    NETWORK,
+    NETWORK
 }

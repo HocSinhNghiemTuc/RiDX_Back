@@ -1,29 +1,24 @@
 package com.hust.entity.v1.asset;
 
+import com.hust.entity.v1.BaseEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Table(name = "asset_category")
-public class AssetCategoryEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class AssetCategoryEntity extends BaseEntity {
 
-    @Column
-    @NotNull
-    private String name;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private EAssetCategory name;
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
+    public EAssetCategory getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(EAssetCategory name) {
         this.name = name;
     }
 }
