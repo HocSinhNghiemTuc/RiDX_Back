@@ -1,17 +1,27 @@
 package com.hust.entity.v1.asset;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Lob;
-import java.io.Serializable;
+import com.hust.entity.v1.DataTypeEntity;
+import com.hust.entity.v1.mapping.asset.DataType;
 
-@Embeddable
-public class AssetCategoryAttributeEntity implements Serializable {
-    @Column
-    private Long assetCategoryId;
+import javax.persistence.*;
 
-    @Column
-    private Long assetAttributeId;
+@Entity
+@Table(name = "asset_category_attribute")
+public class AssetCategoryAttributeEntity {
+    @EmbeddedId
+    private AssetCategoryAttributeKey id;
 
+    @ManyToOne
+    @MapsId("assetCategoryId")
+    @JoinColumn(name = "asset_category_id")
+    private AssetCategoryEntity assetCategory;
 
+    @ManyToOne
+    @MapsId("assetAttributeId")
+    @JoinColumn(name = "asset_attribute_id")
+    private AssetAttributeEntity assetAttribute;
+
+    @ManyToOne
+    @JoinColumn(name = "data_type_id")
+    private DataTypeEntity dataType;
 }
